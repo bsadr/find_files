@@ -1,0 +1,50 @@
+$ kernprof -l -v match_files.py -p '/' -r '.'
+Wrote profile results to match_files.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 28.854 s
+File: match_files.py
+Function: find_regex at line 6
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     6                                           @profile
+     7                                           def find_regex(dir_loc, regex, max_size=0):
+     8                                               """
+     9                                               Find all the files which name matches the regex or their size is
+    10                                                   larger than max_size
+    11                                           
+    12                                               :param dir_loc: the root path
+    13                                               :param regex: the search string
+    14                                               :param max_size: file size (in bytes) should be larger than this
+    15                                               :return: return a list of files which match either of regex or
+    16                                                   larger than max_size, each file's directory is added before filename
+    17                                               """
+    18         1          2.0      2.0      0.0      assert isinstance(max_size, int), "Error: max_size should be integer"
+    19         1          0.0      0.0      0.0      match_files = []
+    20         1          0.0      0.0      0.0      try:
+    21    192044   17652203.0     91.9     61.2          for root, dirs, files in os.walk(dir_loc):
+    22   2373110     844514.0      0.4      2.9              for f in files:
+    23   2181067    6386541.0      2.9     22.1                  if regex and re.search(regex, f):
+    24   2181067    3970709.0      1.8     13.8                      match_files.append(os.path.join(root, f))
+    25                                                           elif max_size:
+    26                                                               fname = os.path.join(root, f)
+    27                                                               if is_large_file(fname, max_size):
+    28                                                                   match_files.append(fname)
+    29                                               except re.error as e:
+    30                                                   raise e
+    31         1          0.0      0.0      0.0      return match_files
+
+Total time: 0 s
+File: match_files.py
+Function: is_large_file at line 33
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    33                                           @profile
+    34                                           def is_large_file(fname, max_size):
+    35                                               try:
+    36                                                   return os.path.getsize(fname) > max_size
+    37                                               except Exception as e:
+    38                                                   # print ('Warning in checking file {}: {}'.format(fname, e))
+    39                                                   return False

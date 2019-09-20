@@ -1,0 +1,3 @@
+../test/data/2/clear_name/name_with one space in the middle.txt
+../test/data/2/clear_name/name_with two  space in the middle.txt
+../test/data/1/this has * and space.txt
