@@ -1,7 +1,5 @@
 # Find Files
-This repo is a python script to recurse a given directory location and return a list of files whose names match a regex.
-# Find Files
-This is a python script to recurse a given directory location and return a list of files whose names match a regex.
+This repo is for a python script (`match_files.py`) to recurse a given directory location and return a list of files whose names match a regex.
 ## Usage
 Use either 
 - `python match_files.py -p <dir_loc> -r <regex> -s <max_size>` from console, or
